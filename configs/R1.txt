@@ -1,0 +1,96 @@
+R1#SH RUN
+Building configuration...
+
+Current configuration : 1030 bytes
+!
+version 15.1
+service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R1
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX15240C20-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip ftp username admin
+ip ftp password cisco
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 10.100.100.2 255.255.255.0
+ duplex auto
+ speed auto
+ standby version 2
+ standby 1 ip 10.100.100.254
+ standby 1 preempt
+!
+interface GigabitEthernet0/1
+ ip address 172.16.1.6 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ ip address 172.16.2.6 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 172.16.1.4 0.0.0.3 area 0
+ network 172.16.2.4 0.0.0.3 area 0
+ network 10.100.100.0 0.0.0.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+logging 10.100.100.10
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+ntp server 10.100.100.10
+!
+end
